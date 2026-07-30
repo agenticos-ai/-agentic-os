@@ -4,6 +4,9 @@
   "framework": "create-react-app",
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/terms", "destination": "/terms.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/disclaimer", "destination": "/disclaimer.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
