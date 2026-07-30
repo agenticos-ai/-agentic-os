@@ -9,18 +9,23 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Missing or invalid task' });
   }
 
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ error: 'API key not configured' });
+  }
+
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'x-api-key': apiKey,
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5',
         max_tokens: 1000,
-        system: `You are NEXUS, the orchestration agent for an Agentic AI company platform. When given a business task, you:
+        system: `You are NEXUS, the orchestration agent for AgenticOS, a premium AI business platform. When given a business task, you:
 1. Identify which agent(s) should handle it (NEXUS, AXIOM, FORGE, SIGNAL, LEDGER, or ORACLE)
 2. Break it into 3-5 autonomous execution steps
 3. Provide a concise result/output simulation
